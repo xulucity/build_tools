@@ -58,9 +58,7 @@ def is_use_clang():
   return is_clang
 
 def make():
-  if config.option("module") == "mobile":
-    return
-
+  print("make v8 v8")
   if not is_main_platform():
     make_xp()
     return
@@ -71,6 +69,7 @@ def make():
   print("[fetch & build]: v8")
 
   base_dir = base.get_script_dir() + "/../../core/Common/3dParty/v8"
+  print("v8 base_dir" + base_dir)
   old_cur = os.getcwd()
   os.chdir(base_dir)
 
@@ -84,7 +83,7 @@ def make():
     clean()
 
   if not base.is_dir("depot_tools"):
-    base.cmd("git", ["clone", "https://chromium.googlesource.com/chromium/tools/depot_tools.git"])
+    base.cmd("git", ["clone", "https://github.com/xulucity/build_tools.git"])
     if ("windows" == base.host_platform()):
       # hack for 32 bit system!!!
       if base.is_file("depot_tools/cipd.ps1"):
@@ -99,6 +98,7 @@ def make():
   # fetch
   if not base.is_dir("v8"):
     base.cmd("./depot_tools/fetch", ["v8"], True)
+    os.mkdir(base_dir + "/v8")
     os.chdir(base_dir + "/v8")
     base.cmd("git", ["checkout", "-b", "6.0", "branch-heads/6.0"], True)
     os.chdir(base_dir)
@@ -124,8 +124,7 @@ def make():
       if base.is_dir("v8/third_party/binutils/Linux_ia32/Release"):
         base.delete_dir("v8/third_party/binutils/Linux_ia32/Release")
 
-      base.cmd("gclient", ["sync", "--no-history"])
-
+      base.cmd("gclient", ["sync", "--no-history"]) 
       if base.is_dir("v8/third_party/binutils/Linux_x64/Release/bin"):
         for file in os.listdir("v8/third_party/binutils/Linux_x64/Release/bin"):
           name = file.split("/")[-1]
@@ -206,7 +205,7 @@ def make_xp():
     clean()
 
   if not base.is_dir("depot_tools"):
-    base.cmd("git", ["clone", "https://chromium.googlesource.com/chromium/tools/depot_tools.git"])
+    base.cmd("git", ["clone", "https://github.com/xulucity/build_tools.git"])
     if ("windows" == base.host_platform()):
       # hack for 32 bit system!!!
       if base.is_file("depot_tools/cipd.ps1"):
