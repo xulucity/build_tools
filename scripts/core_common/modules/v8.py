@@ -83,7 +83,7 @@ def make():
     clean()
 
   if not base.is_dir("depot_tools"):
-    base.cmd("git", ["clone", "https://github.com/xulucity/build_tools.git"])
+    base.cmd("git", ["clone", "https://github.com/xulucity/depot_tools.git"])
     if ("windows" == base.host_platform()):
       # hack for 32 bit system!!!
       if base.is_file("depot_tools/cipd.ps1"):
@@ -205,7 +205,7 @@ def make_xp():
     clean()
 
   if not base.is_dir("depot_tools"):
-    base.cmd("git", ["clone", "https://github.com/xulucity/build_tools.git"])
+    base.cmd("git", ["clone", "https://github.com/xulucity/depot_tools.git"])
     if ("windows" == base.host_platform()):
       # hack for 32 bit system!!!
       if base.is_file("depot_tools/cipd.ps1"):
